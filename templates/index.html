@@ -32,6 +32,25 @@
       <a href="/logout" class="btn btn-danger col-md-3">ログアウト</a>
     </div>
   </form>
+  <form action="/add-dates" class="container py-3">
+    <h3>補足</h3>
+    <p>
+      ※ツイートをしたのにスタンプが押されていない！という方へ。
+    </p>
+    <p>
+      Twitter APIの仕様上、ツイートをしたけどスタンプが押されていないということが結構起こります。
+      その場合はこのフォーム↓にツイートのリンクを貼って送信していただければ、スタンプを正常に押すことができます。
+    </p>
+    <label class="row my-2">
+      <div class="col-md-3 col-form-label">ツイートのリンク:</div>
+      <div class="col-md-9">
+        <input type="text" name="tweet" id="" class="form-control">
+      </div>
+    </label>
+    <div class="row my-2">
+      <button class="btn btn-primary">送信する</button>
+    </div>
+  </form>
   {% else %}
   <p>
     このボタンからログインしてください。
