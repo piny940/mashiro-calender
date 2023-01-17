@@ -25,7 +25,7 @@
     {% endif %}
     <div class="row my-3">
       <button class="btn btn-primary">
-        カレンダーを生成する
+        スタンプカードを{% if image %}再{% endif %}生成する
       </button>
     </div>
     <div class="row">
@@ -59,5 +59,11 @@
     <img src="{{ url_for('static', filename='images/sign-in-with-twitter-gray.png.twimg.1920.png') }}" alt="sign-in-with-twitter" srcset="">
   </a>
   {% endif %}
+  <div class="container mt-3 mb-5">
+    <h3>備考</h3>
+    <div>制作: いちごまかろん(<a href="https://twitter.com/PoporonPoyopoyo">https://twitter.com/PoporonPoyopoyo</a>)</div>
+    <div>スタンプ画像提供: ふまみぃさん(<a href="https://twitter.com/fumamy8">https://twitter.com/fumamy8</a></div>
+    <p class="mt-2">バグとかが見つかった場合はいちごまかろんまで連絡いただけると助かります。</p>
+  </div>
 </div>
 {% endblock %}

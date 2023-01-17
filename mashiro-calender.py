@@ -28,7 +28,7 @@ OAUTH_AUTHENTICATE_URL = TWITTER_API_HOST + '/oauth/authenticate'
 OAUTH_ACCESS_TOKEN_URL = TWITTER_API_HOST + '/oauth/access_token'
 
 CALENDER_DATES = range(19, 28)
-QUERY = '#なぎのらいぶ'
+QUERY = '#凪のバケーション'
 
 client = tweepy.Client(BEARER_TOKEN)
 
