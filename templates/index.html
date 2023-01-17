@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="container mt-3">
-  <h1>ましろんタイムスタンプ</h1>
+  <h1>ましろんスタンプカード</h1>
+  <p>#凪のバケーション をつけて投稿するとスタンプがもらえます。</p>
   {% if user_id %}
   <p>
     @{{ username }}としてログイン中です。
@@ -15,6 +16,10 @@
         <input type="text" name="name" id="" class="form-control">
       </div>
     </label>
+    {% if image %}
+      <div class="p">作成されたスタンプカード</div>
+      <img width="500" src="{{ image }}" alt="" srcset="">
+    {% endif %}
     <div class="row my-3">
       <button class="btn btn-primary">
         カレンダーを生成する

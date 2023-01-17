@@ -9,7 +9,7 @@ class CalenderGenerator():
     for date in stamp_dates:
       self.__stamp_calender(self.base, date)
     
-    self.base.save('static/images/calender.png')
+    self.base.save('assets/images/calender.png')
   
   def __stamp_calender(self, image, date):
     image.paste(self.stamp, self.__date_coordinates(date), self.stamp)

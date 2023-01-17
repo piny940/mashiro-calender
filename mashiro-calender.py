@@ -3,11 +3,12 @@ from datetime import timedelta, datetime
 
 import requests
 import tweepy
-import twint
 from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, session
 from requests_oauthlib import OAuth1Session
 
+from calender_generator import CalenderGenerator
+from gyazo_sender import GyazoSender
 from utils import to_dict
 
 load_dotenv()
@@ -36,16 +37,9 @@ def index():
     'notice': request.args.get('notice'),
     'username': session.get('screen_name'),
     'user_id': session.get('user_id'),
+    'image': request.args.get('image'),
+    'dates': request.args.get('dates'),
   }
-  print(request.args.get('dates'))
-  # response = client.get_user(username='PoporonPoyopoyo')
-  # user_id = response.data.id
-  # print(user_id)
-  # print(response.data.name)
-  # response = client.search_recent_tweets(f'#なぎのらいぶ from:{user_id}')
-  # tweets = response.data
-  # print(response.data)
-    
   return render_template('index.html', **data)
 
 @app.route('/calender', methods=['POST'])
@@ -64,7 +58,10 @@ def calender():
     dates.add(tweet.created_at.day)
   dates = list(dates)
 
-  return redirect(f'/?dates={dates}')
+  CalenderGenerator().create_calender([20, 23])
+  
+  image = GyazoSender.send('assets/images/calender.png')
+  return redirect(f'/?dates={dates}&image={image.url}')
 
 @app.route('/sign_in')
 def sign_in():
