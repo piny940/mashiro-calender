@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, redirect, session
-import tweepy
-from dotenv import load_dotenv
 import os
+from datetime import timedelta, datetime
+
 import requests
-from datetime import timedelta
+import tweepy
+import twint
+from dotenv import load_dotenv
+from flask import Flask, redirect, render_template, request, session
 from requests_oauthlib import OAuth1Session
+
 from utils import to_dict
 
 load_dotenv()
@@ -22,6 +25,7 @@ TWITTER_API_HOST = 'https://api.twitter.com'
 OAUTH_REQUEST_TOKEN_URL = TWITTER_API_HOST + '/oauth/request_token'
 OAUTH_AUTHENTICATE_URL = TWITTER_API_HOST + '/oauth/authenticate'
 OAUTH_ACCESS_TOKEN_URL = TWITTER_API_HOST + '/oauth/access_token'
+CALENDER_DATES = range(12, 15)
 
 client = tweepy.Client(BEARER_TOKEN)
 
@@ -33,6 +37,7 @@ def index():
     'username': session.get('screen_name'),
     'user_id': session.get('user_id'),
   }
+  print(request.args.get('dates'))
   # response = client.get_user(username='PoporonPoyopoyo')
   # user_id = response.data.id
   # print(user_id)
@@ -45,8 +50,21 @@ def index():
 
 @app.route('/calender', methods=['POST'])
 def calender():
-  print(request.form.get('name'))
-  return redirect('/')
+  response = client.search_recent_tweets(
+    f'#なぎのらいぶ from:{session.get("user_id")}',
+    max_results=100,
+    tweet_fields=['created_at'],
+    start_time=datetime(2023, 1, CALENDER_DATES[0]),
+    end_time=datetime(2023, 1, CALENDER_DATES[-1]),
+  )
+  tweets = response.data
+  
+  dates = set()
+  for tweet in tweets:
+    dates.add(tweet.created_at.day)
+  dates = list(dates)
+
+  return redirect(f'/?dates={dates}')
 
 @app.route('/sign_in')
 def sign_in():
