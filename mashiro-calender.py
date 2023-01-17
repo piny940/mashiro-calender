@@ -53,16 +53,43 @@ def calender():
   )
   tweets = response.data
   
-  dates = set()
+  dates = set(session.get('dates') or [])
   for tweet in tweets:
     if tweet.created_at.day in CALENDER_DATES:
       dates.add(tweet.created_at.day)
-  dates = list(dates)
 
-  CalenderGenerator().create_calender([20, 23])
-  session['dates'] = list(set(session.get('dates') or [] + dates))
-  
+  dates = list(dates)
+  session['dates'] = dates
+
+  CalenderGenerator().create_calender(dates)
   image = GyazoSender.send('assets/images/calender.png')
+  
+  return redirect(f'/?image={image.url}')
+
+@app.route('/add_dates', methods=['POST'])
+def add_dates():
+  link = request.form.get('tweet')
+  tweet_id = link.split('/')[-1]
+  response = client.get_tweet(
+    tweet_id,
+    expansions=['author_id'],
+    tweet_fields=['created_at']
+  )
+
+  user_id = response.includes.get('users')[0].id
+  created_at = response.data.created_at.day
+  
+  dates = set(session.get('dates') or [])
+  
+  if str(user_id) == session.get('user_id') and created_at in CALENDER_DATES:
+    dates.add(created_at)
+  
+  dates = list(dates)
+  session['dates'] = dates
+
+  CalenderGenerator().create_calender(dates)
+  image = GyazoSender.send('assets/images/calender.png')
+
   return redirect(f'/?image={image.url}')
 
 @app.route('/sign_in')
