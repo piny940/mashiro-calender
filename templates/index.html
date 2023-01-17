@@ -1,4 +1,21 @@
 {% extends 'layout.html' %}
 {% block content %}
-{{ name }}
+<div class="container mt-3">
+  <h1>おやつの日課</h1>
+  <form class="container mx-3" action="/calender" method="post">
+    <label class="row my-3">
+      <div class="col-md-3 col-form-label">
+        ユーザー名を入力:
+      </div>
+      <div class="col-md-9">
+        <input type="text" name="username" id="" class="form-control">
+      </div>
+    </label>
+    <div class="row my-3">
+      <button class="btn btn-primary">
+        カレンダーを生成する
+      </button>
+    </div>
+  </form>
+</div>
 {% endblock %}
