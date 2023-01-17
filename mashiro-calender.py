@@ -51,7 +51,7 @@ def calender():
     max_results=100,
     tweet_fields=['created_at'],
   )
-  tweets = response.data
+  tweets = response.data or []
   
   dates = set(session.get('dates') or [])
   for tweet in tweets:
