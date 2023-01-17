@@ -14,7 +14,6 @@ backcall==0.2.0
 backports.entry-points-selectable==1.1.1
 beautifulsoup4==4.11.1
 bleach==5.0.1
-cchardet==2.1.7
 certifi==2021.10.8
 cffi==1.15.1
 charset-normalizer==2.1.1
@@ -94,6 +93,7 @@ pyrsistent==0.19.2
 PySocks==1.7.1
 python-dateutil==2.8.2
 python-dotenv==0.21.0
+python-gyazo==2.3.0
 python-socks==2.1.1
 pytz==2022.6
 pyzmq==24.0.1
@@ -114,7 +114,6 @@ toml==0.10.2
 tornado==6.2
 traitlets==5.5.0
 tweepy==4.12.1
-twint==2.1.20
 urllib3==1.26.14
 virtualenv==20.10.0
 virtualenv-clone==0.5.7
