@@ -27,7 +27,7 @@ OAUTH_REQUEST_TOKEN_URL = TWITTER_API_HOST + '/oauth/request_token'
 OAUTH_AUTHENTICATE_URL = TWITTER_API_HOST + '/oauth/authenticate'
 OAUTH_ACCESS_TOKEN_URL = TWITTER_API_HOST + '/oauth/access_token'
 
-CALENDER_DATES = range(12, 15)
+CALENDER_DATES = range(19, 28)
 QUERY = '#なぎのらいぶ'
 
 client = tweepy.Client(BEARER_TOKEN)
@@ -40,7 +40,7 @@ def index():
     'username': session.get('screen_name'),
     'user_id': session.get('user_id'),
     'image': request.args.get('image'),
-    'dates': request.args.get('dates'),
+    'dates': session.get('dates'),
   }
   return render_template('index.html', **data)
 
@@ -50,20 +50,20 @@ def calender():
     f'{QUERY} from:{session.get("user_id")}',
     max_results=100,
     tweet_fields=['created_at'],
-    start_time=datetime(2023, 1, CALENDER_DATES[0]),
-    end_time=datetime(2023, 1, CALENDER_DATES[-1]),
   )
   tweets = response.data
   
   dates = set()
   for tweet in tweets:
-    dates.add(tweet.created_at.day)
+    if tweet.created_at.day in CALENDER_DATES:
+      dates.add(tweet.created_at.day)
   dates = list(dates)
 
   CalenderGenerator().create_calender([20, 23])
+  session['dates'] = list(set(session.get('dates') or [] + dates))
   
   image = GyazoSender.send('assets/images/calender.png')
-  return redirect(f'/?dates={dates}&image={image.url}')
+  return redirect(f'/?image={image.url}')
 
 @app.route('/sign_in')
 def sign_in():
