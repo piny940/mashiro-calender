@@ -18,6 +18,9 @@
     </label>
     {% if image %}
       <div class="p">作成されたスタンプカード</div>
+      <p>
+        <a href="{{ image }}" download="mashiro-calender.png" class="btn btn-outline-primary">画像を保存する</a>
+      </p>
       <img width="500" src="{{ image }}" alt="" srcset="">
     {% endif %}
     <div class="row my-3">
