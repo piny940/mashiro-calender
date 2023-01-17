@@ -1,8 +1,14 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div class="container mt-3">
+<div class="container pt-3">
+  {% if alert %}
+  <div class="alert alert-danger my-2">{{ alert }}</div>
+  {% endif %}
+  {% if notice %}
+  <div class="alert alert-info my-2">{{ notice }}</div>
+  {% endif %}
   <h1>ましろんスタンプカード</h1>
-  <p>#凪のバケーション をつけて投稿するとスタンプがもらえます。</p>
+  <p>#凪のバケーション をつけて投稿すると、投稿した日のスタンプがもらえます。</p>
   
   {% if user_id %}
   <p>
@@ -27,7 +33,7 @@
     {% endif %}
     <div class="row my-3">
       <button id="create-calendar-button" class="btn btn-primary">
-        スタンプカードを{% if image %}再{% endif %}生成する
+        スタンプカードを{% if image %}再度{% endif %}作成する
       </button>
     </div>
     <div class="row">
