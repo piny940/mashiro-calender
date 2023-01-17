@@ -28,7 +28,7 @@ client = tweepy.Client(BEARER_TOKEN)
 @app.route('/')
 def index():
   name = 'Hello world'
-  print(session['screen_name'])
+  print(session.get('screen_name'))
   
   # response = client.get_user(username='PoporonPoyopoyo')
   # user_id = response.data.id
@@ -70,6 +70,11 @@ def sign_in_callback():
   session['oauth_token_secret'] = tokens['oauth_token_secret']
   session['screen_name'] = tokens['screen_name']
 
+  return redirect('/')
+
+@app.route('/logout')
+def logout():
+  session.clear()
   return redirect('/')
 
 if __name__ == '__main__':
