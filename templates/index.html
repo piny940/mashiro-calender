@@ -7,7 +7,7 @@
   <p>
     @{{ username }}としてログイン中です。
   </p>
-  <form class="container mx-3" action="/calender" method="post">
+  <form class="container mx-3" action="/calender" id="calendar-form" method="post">
     <label class="row my-3">
       <div class="col-md-3 col-form-label">
         名前を入力:
@@ -24,7 +24,7 @@
       <img width="500" src="{{ image }}" alt="" srcset="">
     {% endif %}
     <div class="row my-3">
-      <button class="btn btn-primary">
+      <button id="create-calendar-button" class="btn btn-primary">
         スタンプカードを{% if image %}再{% endif %}生成する
       </button>
     </div>
@@ -63,7 +63,11 @@
     <h3>備考</h3>
     <div>制作: いちごまかろん(<a href="https://twitter.com/PoporonPoyopoyo">https://twitter.com/PoporonPoyopoyo</a>)</div>
     <div>スタンプ画像提供: ふまみぃさん(<a href="https://twitter.com/fumamy8">https://twitter.com/fumamy8</a></div>
-    <p class="mt-2">バグとかが見つかった場合はいちごまかろんまで連絡いただけると助かります。</p>
+    <p class="mt-2">
+      バグとかが見つかった場合はいちごまかろんまで連絡いただけると助かります。
+      (当方テスト期間中のためすぐに対応できるとは限りません。あらかじめご了承ください。)
+    </p>
   </div>
 </div>
+<script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
 {% endblock %}
