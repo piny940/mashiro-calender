@@ -26,7 +26,9 @@ TWITTER_API_HOST = 'https://api.twitter.com'
 OAUTH_REQUEST_TOKEN_URL = TWITTER_API_HOST + '/oauth/request_token'
 OAUTH_AUTHENTICATE_URL = TWITTER_API_HOST + '/oauth/authenticate'
 OAUTH_ACCESS_TOKEN_URL = TWITTER_API_HOST + '/oauth/access_token'
+
 CALENDER_DATES = range(12, 15)
+QUERY = '#なぎのらいぶ'
 
 client = tweepy.Client(BEARER_TOKEN)
 
@@ -45,7 +47,7 @@ def index():
 @app.route('/calender', methods=['POST'])
 def calender():
   response = client.search_recent_tweets(
-    f'#なぎのらいぶ from:{session.get("user_id")}',
+    f'{QUERY} from:{session.get("user_id")}',
     max_results=100,
     tweet_fields=['created_at'],
     start_time=datetime(2023, 1, CALENDER_DATES[0]),
