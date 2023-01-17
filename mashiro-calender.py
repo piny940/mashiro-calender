@@ -96,7 +96,7 @@ def add_dates():
 def sign_in():
   session_req = OAuth1Session(CONSUMER_KEY, CONSUMER_SECRET)
   response = session_req.post(OAUTH_REQUEST_TOKEN_URL, params={
-    'oauth_callback': 'https://mashiro-calender.fly.dev'
+    'oauth_callback': 'https://mashiro-calender.fly.dev/sign_in_callback'
   })
   tokens = to_dict(response.text)
   return redirect(f'{OAUTH_AUTHENTICATE_URL}?oauth_token={tokens["oauth_token"]}')
