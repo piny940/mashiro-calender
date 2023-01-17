@@ -7,4 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     submitButtonEl.textContent = '処理中です。少々お待ちください。'
     calendarFormEl.submit()
   })
+
+  const addTweetForm = document.querySelector('#add-tweet-form')
+  const addTweetButton = document.querySelector('#add-tweet-button')
+
+  addTweetButton.addEventListener('click', () => {
+    addTweetButton.setAttribute('disabled', true)
+    addTweetButton.textContent = '処理中です。少々お待ちください。'
+    addTweetForm.submit()
+  })
 })

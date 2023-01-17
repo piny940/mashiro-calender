@@ -3,10 +3,12 @@
 <div class="container mt-3">
   <h1>ましろんスタンプカード</h1>
   <p>#凪のバケーション をつけて投稿するとスタンプがもらえます。</p>
+  
   {% if user_id %}
   <p>
     @{{ username }}としてログイン中です。
   </p>
+  
   <form class="container mx-3" action="/calender" id="calendar-form" method="post">
     <label class="row my-3">
       <div class="col-md-3 col-form-label">
@@ -32,7 +34,8 @@
       <a href="/logout" class="btn btn-danger col-md-3">ログアウト</a>
     </div>
   </form>
-  <form action="/add_dates" method="POST" class="container py-3">
+  
+  <form action="/add_dates" method="POST" id="add-tweet-form" class="container py-3">
     <h3>補足</h3>
     <p>
       ※ツイートをしたのにスタンプが押されていない！という方へ。
@@ -48,9 +51,10 @@
       </div>
     </label>
     <div class="row my-2">
-      <button class="btn btn-primary">送信する</button>
+      <button class="btn btn-primary" id="add-tweet-button">送信する</button>
     </div>
   </form>
+
   {% else %}
   <p>
     このボタンからログインしてください。
@@ -59,6 +63,7 @@
     <img src="{{ url_for('static', filename='images/sign-in-with-twitter-gray.png.twimg.1920.png') }}" alt="sign-in-with-twitter" srcset="">
   </a>
   {% endif %}
+
   <div class="container mt-3 mb-5">
     <h3>備考</h3>
     <div>制作: いちごまかろん(<a href="https://twitter.com/PoporonPoyopoyo">https://twitter.com/PoporonPoyopoyo</a>)</div>
