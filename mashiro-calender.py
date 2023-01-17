@@ -27,9 +27,12 @@ client = tweepy.Client(BEARER_TOKEN)
 
 @app.route('/')
 def index():
-  name = 'Hello world'
-  print(session.get('screen_name'))
-  
+  data = {
+    'alert': request.args.get('alert'),
+    'notice': request.args.get('notice'),
+    'username': session.get('screen_name'),
+    'user_id': session.get('user_id'),
+  }
   # response = client.get_user(username='PoporonPoyopoyo')
   # user_id = response.data.id
   # print(user_id)
@@ -38,11 +41,11 @@ def index():
   # tweets = response.data
   # print(response.data)
     
-  return render_template('index.html', name=name)
+  return render_template('index.html', **data)
 
 @app.route('/calender', methods=['POST'])
 def calender():
-  
+  print(request.form.get('name'))
   return redirect('/')
 
 @app.route('/sign_in')
@@ -65,7 +68,7 @@ def sign_in_callback():
   })
 
   tokens = to_dict(response.text)
-  session['id'] = tokens['user_id']
+  session['user_id'] = tokens['user_id']
   session['oauth_token'] = tokens['oauth_token']
   session['oauth_token_secret'] = tokens['oauth_token_secret']
   session['screen_name'] = tokens['screen_name']

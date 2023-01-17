@@ -2,13 +2,17 @@
 {% block content %}
 <div class="container mt-3">
   <h1>おやつの日課</h1>
+  {% if user_id %}
+  <p>
+    @{{ username }}としてログイン中です。
+  </p>
   <form class="container mx-3" action="/calender" method="post">
     <label class="row my-3">
       <div class="col-md-3 col-form-label">
-        ユーザー名を入力:
+        名前を入力:
       </div>
       <div class="col-md-9">
-        <input type="text" name="username" id="" class="form-control">
+        <input type="text" name="name" id="" class="form-control">
       </div>
     </label>
     <div class="row my-3">
@@ -16,6 +20,17 @@
         カレンダーを生成する
       </button>
     </div>
+    <div class="row">
+      <a href="/logout" class="btn btn-danger col-md-3">ログアウト</a>
+    </div>
   </form>
+  {% else %}
+  <p>
+    このボタンからログインしてください。
+  </p>
+  <a href="/sign_in" class="my-2">
+    <img src="static/images/sign-in-with-twitter-gray.png.twimg.1920.png" alt="sign-in-with-twitter" srcset="">
+  </a>
+  {% endif %}
 </div>
 {% endblock %}
