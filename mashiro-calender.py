@@ -31,6 +31,8 @@ OAUTH_ACCESS_TOKEN_URL = TWITTER_API_HOST + '/oauth/access_token'
 CALENDER_DATES = range(19, 28)
 QUERY = '#凪のバケーション'
 
+DIFF_JST_FROM_UTC = 9
+
 client = tweepy.Client(BEARER_TOKEN)
 
 @app.route('/')
@@ -53,11 +55,12 @@ def calender():
     tweet_fields=['created_at'],
   )
   tweets = response.data or []
-  
+
   dates = set(session.get('dates') or [])
   for tweet in tweets:
-    if tweet.created_at.day in CALENDER_DATES:
-      dates.add(tweet.created_at.day)
+    created_at = tweet.created_at + timedelta(hours=DIFF_JST_FROM_UTC)
+    if created_at.day in CALENDER_DATES:
+      dates.add(created_at.day)
 
   dates = list(dates)
   name = request.form.get('name')
@@ -88,15 +91,15 @@ def add_dates():
     return redirect('/?alert=ツイートのリンクが正しくありません。')
   
   user_id = response.includes.get('users')[0].id
-  created_at = response.data.created_at.day
+  created_at = response.data.created_at + timedelta(hours=DIFF_JST_FROM_UTC)
   
   dates = set(session.get('dates') or [])
   
   if str(user_id) != session.get('user_id'):
     return redirect('/?alert=これはあなたのツイートではありません。')
   
-  if created_at in CALENDER_DATES:
-    dates.add(created_at)
+  if created_at.day in CALENDER_DATES:
+    dates.add(created_at.day)
   
   dates = list(dates)
   session['dates'] = dates
