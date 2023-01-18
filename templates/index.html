@@ -9,7 +9,10 @@
   <div class="alert alert-info my-2">{{ notice }}</div>
   {% endif %}
   <h1>ましろんスタンプカード(非公式)</h1>
-  <p>#凪のバケーション をつけて投稿すると、投稿した日のスタンプがもらえます。</p>
+  <p>
+    <a href="https://twitter.com/search?q=%23凪のバケーション" target="_blank" rel="noopener noreferrer" class="text-decoration-none">#凪のバケーション</a>
+    をつけて投稿すると、投稿した日のスタンプがもらえます。
+  </p>
   
   {% if user_id %}
   <p>
@@ -31,10 +34,12 @@
     </label>
     {% if image %}
       <div class="p">作成されたスタンプカード</div>
-      <p>
-        <a href="{{ image }}" download="mashiro-calender.png" class="btn btn-outline-primary">画像を保存する</a>
-      </p>
       <img class="calendar-image" src="{{ image }}" alt="" srcset="">
+      <p class="small text-muted">
+        ブラウザにもよりますが、「画像を右クリック」>「名前をつけて画像を保存」で保存できると思います。
+        <br>
+        スマホをお使いの方は画像長押しとかで保存できると思います。
+      </p>
     {% endif %}
     <div class="row my-3">
       <button id="create-calendar-button" class="btn btn-primary">
@@ -83,12 +88,14 @@
       に提供していただきました。ありがとうございます！
     </div>
     <p class="mt-2">
+      このサイトは凪乃ましろさんのファンが作った非公式のスタンプカード作成ツールです。
       バグとかが見つかった場合はいちごまかろん(
       <a href="https://twitter.com/PoporonPoyopoyo" target="_blank" rel="noopener noreferrer">
         @PoporonPoyopoyo
       </a>
-      )までご連絡ください。
-      (制作者が今テスト期間中のためすぐに対応できるとは限りません。あらかじめご了承ください。)
+      )までご連絡ください
+      (制作者が今テスト期間中のためすぐに対応できるとは限りません。あらかじめご了承ください)。
+      アプリについての問い合わせを凪乃ましろさんにするのはお控えください。
     </p>
   </div>
 </div>
