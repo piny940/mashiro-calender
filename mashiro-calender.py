@@ -76,7 +76,7 @@ def add_dates():
   tweet_id = link.split('/')[-1]
   
   if not tweet_id:
-    return redirect('/?alert=ツイートのリンクが正しくありません。"')
+    return redirect('/?alert=ツイートのリンクが正しくありません。')
   
   try:
     response = client.get_tweet(
