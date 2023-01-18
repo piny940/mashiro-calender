@@ -11,7 +11,7 @@ class CalenderGenerator():
         'assets/images/mashiro-calender-with-namebox.png')
     self.stamp = Image.open('assets/images/mashiro-stamp.png')
   
-  def create_calender(self, stamp_dates, name):
+  def create_calender(self, stamp_dates, name=''):
     base = self.base_with_namebox if name else self.base
     for date in stamp_dates:
       self.__stamp_calender(base, date)

@@ -21,6 +21,7 @@ CONSUMER_SECRET = os.getenv('API_KEY_SECRET')
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 ACCESS_TOKEN_SECRET = os.getenv('ACCESS_TOKEN_SECRET')
 BEARER_TOKEN = os.getenv('BEARER_TOKEN')
+OAUTH_CALLBACK = os.getenv('TWITTER_OAUTH_CALLBACK')
 
 TWITTER_API_HOST = 'https://api.twitter.com'
 OAUTH_REQUEST_TOKEN_URL = TWITTER_API_HOST + '/oauth/request_token'
@@ -39,7 +40,7 @@ def index():
     'notice': request.args.get('notice'),
     'username': session.get('screen_name'),
     'user_id': session.get('user_id'),
-    'image': request.args.get('image'),
+    'image': session.get('image_url'),
     'dates': session.get('dates'),
   }
   return render_template('index.html', **data)
@@ -59,12 +60,15 @@ def calender():
       dates.add(tweet.created_at.day)
 
   dates = list(dates)
+  name = request.form.get('name')
   session['dates'] = dates
+  session['name'] = name
 
-  CalenderGenerator().create_calender(dates)
+  CalenderGenerator().create_calender(dates, name)
   image = GyazoSender.send('assets/images/calender.png')
+  session['image_url'] = image.url
   
-  return redirect(f'/?image={image.url}&notice=スタンプカードを作成しました。')
+  return redirect(f'/?notice=スタンプカードを作成しました。')
 
 @app.route('/add_dates', methods=['POST'])
 def add_dates():
@@ -97,16 +101,17 @@ def add_dates():
   dates = list(dates)
   session['dates'] = dates
 
-  CalenderGenerator().create_calender(dates)
+  CalenderGenerator().create_calender(dates, session.get('name'))
   image = GyazoSender.send('assets/images/calender.png')
+  session['image_url'] = image.url
 
-  return redirect(f'/?image={image.url}')
+  return redirect('/')
 
 @app.route('/sign_in')
 def sign_in():
   session_req = OAuth1Session(CONSUMER_KEY, CONSUMER_SECRET)
   response = session_req.post(OAUTH_REQUEST_TOKEN_URL, params={
-    'oauth_callback': 'https://mashiro-calender.fly.dev/sign_in_callback'
+    'oauth_callback': OAUTH_CALLBACK
   })
   tokens = to_dict(response.text)
   return redirect(f'{OAUTH_AUTHENTICATE_URL}?oauth_token={tokens["oauth_token"]}')
@@ -116,7 +121,6 @@ def sign_in_callback():
   oauth_token = request.args.get('oauth_token')
   oauth_verifier = request.args.get('oauth_verifier')
 
-  print(oauth_token, oauth_verifier)
   response = requests.post(OAUTH_ACCESS_TOKEN_URL, params={
     "oauth_verifier": oauth_verifier,
     "oauth_token": oauth_token
@@ -136,4 +140,5 @@ def logout():
   return redirect('/')
 
 if __name__ == '__main__':
+  OAUTH_CALLBACK = 'http://127.0.0.1:5000/sign_in_callback'
   app.run(debug=True)
