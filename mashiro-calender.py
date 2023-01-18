@@ -21,6 +21,7 @@ CONSUMER_SECRET = os.getenv('API_KEY_SECRET')
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 ACCESS_TOKEN_SECRET = os.getenv('ACCESS_TOKEN_SECRET')
 BEARER_TOKEN = os.getenv('BEARER_TOKEN')
+OAUTH_CALLBACK = os.getenv('TWITTER_OAUTH_CALLBACK')
 
 TWITTER_API_HOST = 'https://api.twitter.com'
 OAUTH_REQUEST_TOKEN_URL = TWITTER_API_HOST + '/oauth/request_token'
@@ -106,7 +107,7 @@ def add_dates():
 def sign_in():
   session_req = OAuth1Session(CONSUMER_KEY, CONSUMER_SECRET)
   response = session_req.post(OAUTH_REQUEST_TOKEN_URL, params={
-    'oauth_callback': 'https://mashiro-calender.fly.dev/sign_in_callback'
+    'oauth_callback': OAUTH_CALLBACK
   })
   tokens = to_dict(response.text)
   return redirect(f'{OAUTH_AUTHENTICATE_URL}?oauth_token={tokens["oauth_token"]}')
@@ -136,4 +137,5 @@ def logout():
   return redirect('/')
 
 if __name__ == '__main__':
+  OAUTH_CALLBACK = 'http://127.0.0.1:5000/sign_in_callback'
   app.run(debug=True)
