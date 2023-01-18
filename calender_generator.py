@@ -27,7 +27,7 @@ class CalenderGenerator():
   def __embed_name(self, image, name):
     font = ImageFont.truetype(FONT_PATH, FONT_SIZE)
     draw = ImageDraw.Draw(image)
-    draw.text((1472, 1024), name, font=font, fill=NAME_COLOR)
+    draw.text((1445, 1024), name, font=font, fill=NAME_COLOR)
   
   def __date_coordinates(self, date):
     if date == 19:
