@@ -26,10 +26,13 @@
         名前を入力:
       </div>
       <div class="">
-        <span class="small text-muted">(空白のままでもOK。あまり長いと枠からはみ出ます。絵文字不可)</span>
+        <span class="small text-danger">
+          絵文字は使用できません。Twitterの名前と一致している必要はないので絵文字を除いて
+          入力してください。
+        </span>
       </div>
       <div class="">
-        <input type="text" name="name" id="" class="form-control">
+        <input type="text" name="name" id="" class="form-control" placeholder="いちごまかろん">
       </div>
     </label>
     {% if image %}
