@@ -40,7 +40,7 @@ def index():
     'notice': request.args.get('notice'),
     'username': session.get('screen_name'),
     'user_id': session.get('user_id'),
-    'image': request.args.get('image'),
+    'image': session.get('image_url'),
     'dates': session.get('dates'),
   }
   return render_template('index.html', **data)
@@ -66,8 +66,9 @@ def calender():
 
   CalenderGenerator().create_calender(dates, name)
   image = GyazoSender.send('assets/images/calender.png')
+  session['image_url'] = image.url
   
-  return redirect(f'/?image={image.url}&notice=スタンプカードを作成しました。')
+  return redirect(f'/?notice=スタンプカードを作成しました。')
 
 @app.route('/add_dates', methods=['POST'])
 def add_dates():
@@ -102,8 +103,9 @@ def add_dates():
 
   CalenderGenerator().create_calender(dates, session.get('name'))
   image = GyazoSender.send('assets/images/calender.png')
+  session['image_url'] = image.url
 
-  return redirect(f'/?image={image.url}')
+  return redirect('/')
 
 @app.route('/sign_in')
 def sign_in():
