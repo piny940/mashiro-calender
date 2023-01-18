@@ -17,6 +17,7 @@
   </p>
   
   <form class="container mx-3" action="/calender" id="calendar-form" method="post">
+    <h3>スタンプカード作成</h3>
     <label class="row my-3">
       <div class="">
         名前を入力:
@@ -67,7 +68,7 @@
 
   {% else %}
   <p>
-    こちらのボタンからログインしてください。
+    ツイートを読み込むためにこちらのボタンからログインしてください。
   </p>
   <a href="/sign_in" class="my-2">
     <img src="{{ url_for('static', filename='images/sign-in-with-twitter-gray.png.twimg.1920.png') }}" alt="sign-in-with-twitter" srcset="">
