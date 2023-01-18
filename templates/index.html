@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% block css %}{{ url_for('static', filename='css/index.css') }}{% endblock %}
 {% block content %}
 <div class="container pt-3">
   {% if alert %}
@@ -17,10 +18,13 @@
   
   <form class="container mx-3" action="/calender" id="calendar-form" method="post">
     <label class="row my-3">
-      <div class="col-md-3 col-form-label">
+      <div class="">
         名前を入力:
       </div>
-      <div class="col-md-9">
+      <div class="">
+        <span class="small text-muted">(空白のままでもOK あまり長いと枠からはみ出ます)</span>
+      </div>
+      <div class="">
         <input type="text" name="name" id="" class="form-control">
       </div>
     </label>
@@ -29,7 +33,7 @@
       <p>
         <a href="{{ image }}" download="mashiro-calender.png" class="btn btn-outline-primary">画像を保存する</a>
       </p>
-      <img width="500" src="{{ image }}" alt="" srcset="">
+      <img class="calendar-image" src="{{ image }}" alt="" srcset="">
     {% endif %}
     <div class="row my-3">
       <button id="create-calendar-button" class="btn btn-primary">
