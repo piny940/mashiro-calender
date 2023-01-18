@@ -60,9 +60,11 @@ def calender():
       dates.add(tweet.created_at.day)
 
   dates = list(dates)
+  name = request.form.get('name')
   session['dates'] = dates
+  session['name'] = name
 
-  CalenderGenerator().create_calender(dates)
+  CalenderGenerator().create_calender(dates, name)
   image = GyazoSender.send('assets/images/calender.png')
   
   return redirect(f'/?image={image.url}&notice=スタンプカードを作成しました。')
@@ -98,7 +100,7 @@ def add_dates():
   dates = list(dates)
   session['dates'] = dates
 
-  CalenderGenerator().create_calender(dates)
+  CalenderGenerator().create_calender(dates, session.get('name'))
   image = GyazoSender.send('assets/images/calender.png')
 
   return redirect(f'/?image={image.url}')
@@ -117,7 +119,6 @@ def sign_in_callback():
   oauth_token = request.args.get('oauth_token')
   oauth_verifier = request.args.get('oauth_verifier')
 
-  print(oauth_token, oauth_verifier)
   response = requests.post(OAUTH_ACCESS_TOKEN_URL, params={
     "oauth_verifier": oauth_verifier,
     "oauth_token": oauth_token
